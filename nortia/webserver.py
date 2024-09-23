@@ -1,6 +1,7 @@
 # Python 3 server example
-import sys
 from http.server import BaseHTTPRequestHandler, HTTPServer
+import json
+from nortia.repo import read_all
 
 
 def MakeHandlerClassFromArgv(csv_filename):
@@ -13,8 +14,8 @@ def MakeHandlerClassFromArgv(csv_filename):
             self.send_response(200)
             self.send_header("Content-type", "text/plain")
             self.end_headers()
-            with open(csv_filename, 'r', encoding='utf-8') as fp:
-                self.wfile.write(bytes(fp.read(), 'utf-8'))
+            all_entries = read_all(csv_filename)
+            self.wfile.write(bytes(json.dumps(all_entries), "utf-8"))
 
     return CustomHandler
 

@@ -1,22 +1,13 @@
 import argparse
 from multiprocessing import Process
 
-import repo
-import webserver
+from nortia.webserver import serve
+from nortia.input_reader import read_input
 
-
-def read_input(filename):
-    while True:
-        input_str = input("IN/OUT: ")
-        if "IN" in input_str:
-            print("IN")
-            repo.write_now_in(filename)
-        else:
-            print("OUT")
-            repo.write_now_out(filename)
 
 def start_web(filename):
-    webserver.serve(filename)
+    serve(filename)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -25,12 +16,7 @@ if __name__ == '__main__':
     parser.add_argument('filename')
     args = parser.parse_args()
 
-
     process = Process(target=start_web, args=(args.filename,))
     process.start()
 
     read_input(args.filename)
-
-    #swebserver.serve(args.filename)
-    #s# TODO: Replace by the button thread
-    #read_input(args.filename)
