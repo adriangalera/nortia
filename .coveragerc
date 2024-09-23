@@ -1,0 +1,8 @@
+[run]
+source = nortia
+command_line =-m unittest
+omit=
+
+
+[report]
+omit=

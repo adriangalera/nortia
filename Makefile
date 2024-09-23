@@ -19,3 +19,8 @@ install-service:
 
 clean:
 	rm -rf tests/repo-files/*
+
+coverage:
+	coverage run
+	coverage report
+	coverage xml

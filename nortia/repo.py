@@ -1,37 +1,43 @@
 from datetime import datetime
-import os
+import csv
 
-REPO_FOLDER = "./storage"
-
-# Keep one file per day
+REPO_FILE = "./storage/time.csv"
 
 
-def write_now_in(folder=REPO_FOLDER, time=datetime.now()):
-    __write_in_file__("IN", folder, time)
+def write_now_in(file=REPO_FILE, time=datetime.now()):
+    __write_entry__("IN", file, time)
 
 
-def write_now_out(folder=REPO_FOLDER, time=datetime.now()):
-    __write_in_file__("OUT", folder, time)
+def write_now_out(file=REPO_FILE, time=datetime.now()):
+    __write_entry__("OUT", file, time)
 
 
-def read_today(folder=REPO_FOLDER, time=datetime.now()):
-    today_file_str = __today_file__(folder, time)
-    with open(today_file_str, 'r', encoding='utf-8') as f:
-        return f.read()
+def __write_entry__(keyword, file, time):
+    today_str = __today__(time)
+    entries = read_all(file=file)
+    now_str = __now__(time)
+    new_entry = f"{keyword}:{now_str}"
+    entries_for_today = entries.get(today_str, [])
+    entries_for_today.append(new_entry)
+    entries[today_str] = entries_for_today
+    __save_csv__(entries, file)
 
 
-def read_all():
-    pass
+def read_today(file=REPO_FILE, time=datetime.now()):
+    entries = read_all(file=file)
+    today_str = __today__(time)
+    return entries.get(today_str, None)
 
 
-def __write_in_file__(keyword, folder, time):
-    today_file_str = __today_file__(folder, time)
-    cur_time = __now__(time)
-    with open(today_file_str, 'r', encoding='utf-8') as f:
-        today_content = f.read()
-    with open(today_file_str, 'w', encoding='utf-8') as f:
-        today_content = today_content + f"{keyword}:{cur_time}"
-        f.write(today_content)
+def read_all(file=REPO_FILE):
+    entries = {}
+    with open(file, 'r', encoding='utf-8') as csvfile:
+        timesreader = csv.reader(csvfile)
+        for row in timesreader:
+            day = row[0]
+            entries_for_day = row[1:]
+            entries[day] = entries_for_day
+    return entries
 
 
 def __today__(time):
@@ -42,9 +48,10 @@ def __now__(time):
     return time.strftime("%Y-%m-%d %H:%M:%S")
 
 
-def __today_file__(folder, time):
-    today_str = __today__(time)
-    today_file_path = f"{folder}/{today_str}.txt"
-    if not os.path.exists(today_file_path):
-        os.system(f"touch {folder}")
-    return today_file_path
+def __save_csv__(entries, file):
+    with open(file, 'w', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        for day, day_entries in entries.items():
+            row = [day]
+            row.extend(day_entries)
+            writer.writerow(row)
