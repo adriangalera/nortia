@@ -1,6 +1,8 @@
 import argparse
+from multiprocessing import Process
 
 import repo
+import webserver
 
 
 def read_input(filename):
@@ -13,6 +15,8 @@ def read_input(filename):
             print("OUT")
             repo.write_now_out(filename)
 
+def start_web(filename):
+    webserver.serve(filename)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -21,4 +25,12 @@ if __name__ == '__main__':
     parser.add_argument('filename')
     args = parser.parse_args()
 
+
+    process = Process(target=start_web, args=(args.filename,))
+    process.start()
+
     read_input(args.filename)
+
+    #swebserver.serve(args.filename)
+    #s# TODO: Replace by the button thread
+    #read_input(args.filename)
