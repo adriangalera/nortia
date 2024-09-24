@@ -21,5 +21,6 @@ if __name__ == '__main__':
                         type=int, choices=range(0, 10))
     args = parser.parse_args()
 
-    listen_gpio_events(args.filename, args.led_pwr_pin, args.btn_read_pin)
     listen_web(args.filename)
+    listen_gpio_events(args.filename, args.led_pwr_pin, args.btn_read_pin)
+
