@@ -1,6 +1,14 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import json
 from nortia.repo import read_all
+from nortia.calchours import calc_hours
+
+
+def format_output(all_entries):
+    text = ""
+    for day, entries in all_entries.items():
+        row = calc_hours(entries)
+        text += day+"\t" + "\t".join(row)
+    return text
 
 
 def web_srv_class_factory(csv_filename):
@@ -11,7 +19,7 @@ def web_srv_class_factory(csv_filename):
             self.send_header("Content-type", "text/plain")
             self.end_headers()
             all_entries = read_all(csv_filename)
-            self.wfile.write(bytes(json.dumps(all_entries), "utf-8"))
+            self.wfile.write(bytes(format_output(all_entries), "utf-8"))
 
     return CsvServerHandler
 

@@ -17,12 +17,12 @@ def calc_hours(row):
                 timedelta = time_difference
             else:
                 timedelta = timedelta + time_difference
-
-    row.extend(to_hours_minutes_seconds(timedelta))
+    if timedelta:
+        row.extend(to_hours_minutes_seconds(timedelta))
     return row
 
 
 def to_hours_minutes_seconds(td):
     hours, remainder = divmod(td.seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
-    return [hours, minutes, seconds]
+    return [str(hours), str(minutes), str(seconds)]
