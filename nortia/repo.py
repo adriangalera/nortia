@@ -4,12 +4,12 @@ import csv
 from nortia.date_format import today, now
 
 
-def write_now_in(file,  time=datetime.now()):
-    __write_entry__("IN", file, time)
+def write_now_in(file,  time_fn=datetime.now):
+    __write_entry__("IN", file, time_fn())
 
 
-def write_now_out(file, time=datetime.now()):
-    __write_entry__("OUT", file, time)
+def write_now_out(file, time_fn=datetime.now):
+    __write_entry__("OUT", file, time_fn())
 
 
 def __write_entry__(keyword, file, time):
@@ -23,9 +23,9 @@ def __write_entry__(keyword, file, time):
     __save_csv__(entries, file)
 
 
-def read_today(file, time=datetime.now()):
+def read_today(file, time_fn=datetime.now):
     entries = read_all(file=file)
-    today_str = today(time)
+    today_str = today(time_fn())
     return entries.get(today_str, None)
 
 

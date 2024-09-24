@@ -17,32 +17,38 @@ class TestRepo(unittest.TestCase):
         return super().setUp()
 
     def test_in(self):
-        write_now_in(file=self.file, time=self.stubbed_date)
-        today_contents = read_today(file=self.file, time=self.stubbed_date)
+        def time_fn(): return self.stubbed_date
+        write_now_in(file=self.file, time_fn=time_fn)
+        today_contents = read_today(file=self.file, time_fn=time_fn)
         dt_fmt = self.stubbed_date.strftime("%Y-%m-%d %H:%M:%S")
         expected_contents = [f"IN:{dt_fmt}"]
         self.assertEqual(expected_contents, today_contents)
 
     def test_out(self):
-        write_now_out(file=self.file, time=self.stubbed_date)
-        today_contents = read_today(file=self.file, time=self.stubbed_date)
+        def time_fn(): return self.stubbed_date
+        write_now_out(file=self.file, time_fn=time_fn)
+        today_contents = read_today(file=self.file, time_fn=time_fn)
         dt_fmt = self.stubbed_date.strftime("%Y-%m-%d %H:%M:%S")
         expected_contents = [f"OUT:{dt_fmt}"]
         self.assertEqual(expected_contents, today_contents)
 
     def test_multiple_in_out_same_day(self):
-        write_now_in(file=self.file, time=self.stubbed_date)
-        write_now_out(file=self.file, time=self.stubbed_date)
-        today_contents = read_today(file=self.file, time=self.stubbed_date)
+        def time_fn(): return self.stubbed_date
+        write_now_in(file=self.file, time_fn=time_fn)
+        write_now_out(file=self.file, time_fn=time_fn)
+        today_contents = read_today(file=self.file, time_fn=time_fn)
         dt_fmt = self.stubbed_date.strftime("%Y-%m-%d %H:%M:%S")
         expected_contents = [f"IN:{dt_fmt}", f"OUT:{dt_fmt}"]
         self.assertEqual(expected_contents, today_contents)
 
     def test_multiple_days(self):
-        write_now_in(file=self.file, time=self.stubbed_date)
-        write_now_out(file=self.file, time=self.stubbed_date)
-        write_now_in(file=self.file, time=self.stubbed_date2)
-        write_now_out(file=self.file, time=self.stubbed_date2)
+        def time_fn(): return self.stubbed_date
+        def time2_fn(): return self.stubbed_date2
+
+        write_now_in(file=self.file, time_fn=time_fn)
+        write_now_out(file=self.file, time_fn=time_fn)
+        write_now_in(file=self.file, time_fn=time2_fn)
+        write_now_out(file=self.file, time_fn=time2_fn)
         dt_fmt = self.stubbed_date.strftime("%Y-%m-%d %H:%M:%S")
         dt_day_fmt = self.stubbed_date.strftime("%Y-%m-%d")
         dt2_fmt = self.stubbed_date2.strftime("%Y-%m-%d %H:%M:%S")
