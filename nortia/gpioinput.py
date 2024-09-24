@@ -1,5 +1,5 @@
-import RPi.GPIO as GPIO
 from time import sleep
+from RPi import GPIO # pylint: disable=import-error
 
 from nortia.repo import write_now_in, write_now_out
 

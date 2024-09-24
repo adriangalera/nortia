@@ -18,7 +18,7 @@ install-service:
 	sudo systemctl start nortia
 
 clean:
-	rm -rf tests/repo-files/*
+	rm -rf tests/repo-files && mkdir tests/repo-files
 
 coverage:
 	coverage run
