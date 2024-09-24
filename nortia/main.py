@@ -23,5 +23,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     listen_web_async(args.filename)
-    # listen_gpio_events(args.filename, args.led_pwr_pin, args.btn_read_pin)
-    listen_input_events(args.filename)
+    listen_gpio_events(args.filename, args.led_pwr_pin, args.btn_read_pin)
+    #listen_input_events(args.filename)

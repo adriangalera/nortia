@@ -27,3 +27,7 @@ coverage:
 
 reset-hours-file:
 	rm time-tracking.csv && touch time-tracking.csv
+
+re-deploy:
+	git pull origin main
+	sudo systemctl restart nortia
