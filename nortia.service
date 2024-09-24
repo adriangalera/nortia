@@ -1,0 +1,12 @@
+[Unit]
+Description=nortia
+After=syslog.target network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/nortia
+ExecStart="PYTHONPATH=/home/pi/nortia /home/pi/nortia/.venv/bin/python nortia/main.py --filename /home/pi/nortia/time-tracking.csv --led-pwr-pin 2 --btn-read-pin 3"
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

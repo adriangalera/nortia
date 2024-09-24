@@ -24,3 +24,6 @@ coverage:
 	coverage run
 	coverage report
 	coverage xml
+
+reset-hours-file:
+	rm time-tracking.csv && touch time-tracking.csv
