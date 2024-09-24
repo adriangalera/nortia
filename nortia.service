@@ -5,7 +5,7 @@ After=syslog.target network.target
 [Service]
 Type=simple
 WorkingDirectory=/home/pi/nortia
-ExecStart=/usr/bin/python /home/pi/nortia/main.py --filename /home/pi/nortia/time-tracking.csv --led-pwr-pin 2 --btn-read-pin 3
+ExecStart=/usr/bin/python /home/pi/nortia/nortia/main.py --filename /home/pi/nortia/time-tracking.csv --led-pwr-pin 2 --btn-read-pin 3
 Restart=on-abort
 EnvironmentFile=/home/pi/nortia/.env
 
