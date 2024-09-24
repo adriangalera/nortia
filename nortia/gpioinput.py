@@ -9,6 +9,8 @@ def state_has_changed(previous_state, cur_state):
 
 
 def listen_gpio_events(filename, led_pwr_pin, btn_read_pin):
+    print(f"GPIO listening for events at pin {btn_read_pin}")
+
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
 

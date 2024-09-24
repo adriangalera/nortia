@@ -17,7 +17,9 @@ def web_srv_class_factory(csv_filename):
 
 
 def serve(filename):
-    server_address = ('', 8000)
+    port = 8000
+    server_address = ('', port)
+    print(f"HTTP listening at {port}")
     handler_cls = web_srv_class_factory(filename)
     httpd = HTTPServer(server_address, handler_cls)
     httpd.serve_forever()
