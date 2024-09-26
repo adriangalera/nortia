@@ -7,7 +7,7 @@ def format_output(all_entries):
     text = ""
     for day, entries in all_entries.items():
         row = calc_hours(entries)
-        text += day+"\t" + "\t".join(row)+"\n"
+        text += day +"\t" + "\t".join(row)+"\n"
     return text
 
 
