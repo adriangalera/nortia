@@ -3,7 +3,7 @@ from multiprocessing import Process
 
 from nortia.webserver import serve
 from nortia.gpioinput import listen_gpio_events
-from nortia.stdinput_reader import listen_input_events
+#from nortia.stdinput_reader import listen_input_events
 
 
 def listen_web_async(filename):

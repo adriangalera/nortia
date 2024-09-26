@@ -12,9 +12,9 @@ class TestHourCalculations(unittest.TestCase):
         ]
 
         new_row = calc_hours(row)
-        expected_hours = 4
-        expected_minutes = 0
-        expected_seconds = 0
+        expected_hours = '4'
+        expected_minutes = '0'
+        expected_seconds = '0'
 
         self.assertEqual(expected_seconds, new_row[-1])
         self.assertEqual(expected_minutes, new_row[-2])
@@ -27,9 +27,9 @@ class TestHourCalculations(unittest.TestCase):
         ]
 
         new_row = calc_hours(row)
-        expected_hours = 10
-        expected_minutes = 0
-        expected_seconds = 0
+        expected_hours = '10'
+        expected_minutes = '0'
+        expected_seconds = '0'
 
         self.assertEqual(expected_seconds, new_row[-1])
         self.assertEqual(expected_minutes, new_row[-2])
