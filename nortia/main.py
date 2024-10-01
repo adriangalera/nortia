@@ -3,7 +3,7 @@ from multiprocessing import Process
 
 from nortia.webserver import serve
 from nortia.gpioinput import listen_gpio_events
-#from nortia.stdinput_reader import listen_input_events
+from nortia.stdinput_reader import listen_input_events
 
 
 def listen_web_async(filename):
@@ -20,8 +20,12 @@ if __name__ == '__main__':
                         type=int, choices=range(0, 10))
     parser.add_argument('--btn-read-pin', required=True,
                         type=int, choices=range(0, 10))
+    parser.add_argument('--std-input', action=argparse.BooleanOptionalAction)
     args = parser.parse_args()
 
     listen_web_async(args.filename)
-    listen_gpio_events(args.filename, args.led_pwr_pin, args.btn_read_pin)
-    #listen_input_events(args.filename)
+
+    if args.std_input:
+        listen_input_events(args.filename)
+    else:
+        listen_gpio_events(args.filename, args.led_pwr_pin, args.btn_read_pin)

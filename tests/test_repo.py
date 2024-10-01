@@ -2,7 +2,7 @@ import unittest
 import datetime
 import uuid
 import os
-from nortia.repo import write_now_in, write_now_out, read_today, read_all
+from nortia.repo import write_now_in, write_now_out, read_today, read_all, replace
 
 
 class TestRepo(unittest.TestCase):
@@ -59,3 +59,26 @@ class TestRepo(unittest.TestCase):
         }
         all_entries = read_all(file=self.file)
         self.assertEqual(expected_contents, all_entries)
+
+    def test_replace(self):
+        def time_fn(): return self.stubbed_date
+        dt_fmt = self.stubbed_date.strftime("%Y-%m-%d %H:%M:%S")
+        dt_day_fmt = self.stubbed_date.strftime("%Y-%m-%d")
+
+        search_term = f"IN:{dt_fmt}"
+        write_now_in(file=self.file, time_fn=time_fn)
+
+        replaced_date = datetime.datetime(2019, 1, 1, 0, 0, 1)
+        replaced_date_fmt = replaced_date.strftime("%Y-%m-%d %H:%M:%S")
+        replace_term = f"IN:{replaced_date_fmt}"
+
+        expected_contents_replaced = {
+            dt_day_fmt: [f"IN:{replaced_date_fmt}"],
+        }
+
+        all_entries = replace(self.file, search_term, replace_term)
+        self.assertEqual(expected_contents_replaced, all_entries)
+
+    def test_replace_validation(self):
+        with self.assertRaises(ValueError):
+            replace(self.file, "foo", "bar")
