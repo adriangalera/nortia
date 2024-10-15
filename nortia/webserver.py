@@ -1,11 +1,12 @@
 from urllib.parse import unquote
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from nortia.repo import read_all, replace
-from nortia.calchours import calc_hours
+from nortia.calchours import calc_hours, calc_accumulated_hours
 
 
 def format_output(all_entries):
-    text = ""
+    total_acc_hours = calc_accumulated_hours(all_entries.values())
+    text = "Accumulated hours: " + "\t".join(total_acc_hours) +"\n"
     for day, entries in all_entries.items():
         row = calc_hours(entries)
         text += day + "\t" + "\t".join(row)+"\n"

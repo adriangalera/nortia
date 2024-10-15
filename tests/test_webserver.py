@@ -15,6 +15,8 @@ class TestWebserver(unittest.TestCase):
         line_two = ["2024-01-02", "IN:2024-01-02 00:00:00",
                     "OUT:2024-01-02 12:00:00", "12", "0", "0"]
 
-        expected_output = "\t".join(
-            line_one) + "\n" + "\t".join(line_two) + "\n"
+        acc_hours_message = "Accumulated hours: 8\t0\t0\n"
+        expected_output = acc_hours_message
+        expected_output += "\t".join(line_one) + "\n" + "\t".join(line_two) + "\n"
+
         self.assertEqual(tsv_output, expected_output)
