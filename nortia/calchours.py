@@ -12,7 +12,7 @@ def calc_hours(row):
 def calc_accumulated_hours(rows, working_hours_per_day=8):
     acc_hours = None
     complete_days = 0
-    for row in rows:
+    for row in list(rows)[0:-1]:
         day_td = __calc_intra_day_acc_hours__(row)
         if day_td:
             complete_days += 1

@@ -38,7 +38,9 @@ class TestHourCalculations(unittest.TestCase):
     def test_calculate_hours_accumulated_in_multiple_days(self):
         rows = [
             ["IN:2024-09-23 09:00:00", "OUT:2024-09-23 19:00:00"],  # 10h
-            ["IN:2024-09-24 09:00:00", "OUT:2024-09-24 19:00:00"]   # 10h
+            ["IN:2024-09-24 09:00:00", "OUT:2024-09-24 19:00:00"],  # 10h
+            # Does not take into account last day (current)
+            ["IN:2024-09-25 09:00:00", "OUT:2024-09-26 19:00:00"]
         ]
         acc_hours = calc_accumulated_hours(rows, working_hours_per_day=8)
         expected_hours = '4'
@@ -62,3 +64,13 @@ class TestHourCalculations(unittest.TestCase):
         self.assertEqual(expected_seconds, acc_hours[-1])
         self.assertEqual(expected_minutes, acc_hours[-2])
         self.assertEqual(expected_hours, acc_hours[-3])
+
+    def test_complex_case(self):
+        with open('tests/complex.txt', 'r') as complex_example_fd:
+            contents = complex_example_fd.readlines()
+            rows = []
+            for line in contents:
+                row = line.replace("\n", "").split("\t")
+                rows.append(row)
+            acc_hours = calc_accumulated_hours(rows, working_hours_per_day=8)
+            self.assertEqual(["4", "37", "43"], acc_hours)
