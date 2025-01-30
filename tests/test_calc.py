@@ -74,3 +74,17 @@ class TestHourCalculations(unittest.TestCase):
                 rows.append(row)
             acc_hours = calc_accumulated_hours(rows, working_hours_per_day=8)
             self.assertEqual(["4", "37", "43"], acc_hours)
+
+    def test_no_start(self):
+        row = [
+            "OUT:2024-09-23 10:00:00"
+        ]
+
+        new_row = calc_hours(row)
+        expected_hours = '0'
+        expected_minutes = '0'
+        expected_seconds = '0'
+
+        self.assertEqual(expected_seconds, new_row[-1])
+        self.assertEqual(expected_minutes, new_row[-2])
+        self.assertEqual(expected_hours, new_row[-3])

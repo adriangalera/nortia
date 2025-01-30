@@ -4,7 +4,7 @@ from nortia.date_format import from_str
 
 def calc_hours(row):
     day_acc_hours = __calc_intra_day_acc_hours__(row)
-    if day_acc_hours:
+    if day_acc_hours is not None:
         row.extend(to_hours_minutes_seconds(day_acc_hours))
     return row
 
@@ -35,7 +35,8 @@ def __calc_intra_day_acc_hours__(row):
         else:
             time = time.replace("OUT:", "")
             end_dt = from_str(time)
-
+            if start_dt is None:
+                start_dt = end_dt
             time_difference = end_dt - start_dt
             if acc_hours is None:
                 acc_hours = time_difference
