@@ -8,3 +8,8 @@ How to run it:
 ```bash
 PYTHONPATH=. python3 nortia/main.py /tmp/test.csv
 ```
+To edit the file, use https://filebrowser.org/installation:
+
+```bash
+filebrowser -a 0.0.0.0 -r nortia/
+```

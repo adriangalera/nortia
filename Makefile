@@ -12,16 +12,22 @@ lint:
 
 install-service:
 	sudo cp nortia.service /etc/systemd/system/nortia.service
+	sudo cp editnortia.service /etc/systemd/system/editnortia.service
 	sudo chmod 644 /etc/systemd/system/nortia.service
+	sudo chmod 644 /etc/systemd/system/editnortia.service
 	sudo chown root:root /etc/systemd/system/nortia.service
+	sudo chown root:root /etc/systemd/system/editnortia.service
 	sudo systemctl enable nortia
+	sudo systemctl enable editnortia
 	sudo systemctl start nortia
+	sudo systemctl start editnortia
 
 clean:
 	rm -rf tests/repo-files && mkdir tests/repo-files
 
 coverage:
 	coverage run
+
 	coverage report
 	coverage xml
 

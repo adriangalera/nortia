@@ -1,0 +1,12 @@
+[Unit]
+Description=Edit nortia
+After=syslog.target network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/nortia
+ExecStart=filebrowser -a 0.0.0.0 -r .
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
